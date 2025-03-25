@@ -1,0 +1,30 @@
+:root {
+  --color-generic-foreground: #000;
+  --color-generic-background: #FFF;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--color-generic-background);
+  color: var(--color-generic-foreground);
+  font-size: 10px;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1.6rem;
+}
+
+body,
+#root {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
