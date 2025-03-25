@@ -1,6 +1,24 @@
 :root {
-  --color-generic-foreground: #000;
-  --color-generic-background: #FFF;
+  --s-xs: 0.8rem;
+  --s-sm: 1.2rem;
+  --s-md: 2rem;
+  --s-lg: 3.2rem;
+  --s-xl: 5.2rem;
+
+  --color-primary: #6CBF6B;
+  --color-secondary: #92DCE5;
+
+  --color-generic-white: #FFF;
+  --color-generic-gray-light: #BEBEBE;
+  --color-generic-gray: #7C7C7C;
+  --color-generic-black: #000;
+
+  --color-generic-foreground: #2B303A;
+  --color-generic-background: #EEE5E9;
+
+  --border-radius-sm: 0.8rem;
+  --border-radius: 1.2rem;
+  --border-radius-lg: 2rem;
 }
 
 * {
@@ -27,4 +45,17 @@ body,
 #root {
   display: flex;
   justify-content: center;
+}
+
+button,
+input,
+select {
+  line-height: 1;
+  border: 0;
+  padding: 0;
+}
+
+input,
+button {
+  font: inherit;
 }
