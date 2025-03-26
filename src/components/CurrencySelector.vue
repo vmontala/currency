@@ -1,6 +1,10 @@
 <template>
   <div class="currencies">
-    <select v-model="model" class="currencies__field">
+    <select
+      v-model="model"
+      class="currencies__field"
+      v-bind="$attrs"
+    >
       <option
         v-for="currency in currenciesStore.currencies"
         :key="currency.code"
@@ -21,6 +25,8 @@ import useCurrenciesStore from '@/stores/currencies'
 const currenciesStore = useCurrenciesStore()
 
 const model = defineModel({ required: true })
+
+defineOptions({ inheritAttrs: false })
 </script>
 
 <style scoped>
@@ -41,6 +47,11 @@ const model = defineModel({ required: true })
   .currencies__value {
     padding: var(--s-sm);
     background-color: var(--color-generic-white);
+  }
+
+  .currencies__field[disabled] + .currencies__value {
+    background-color: var(--color-generic-background);
+    color: var(--color-generic-gray);
   }
 }
 </style>
