@@ -1,5 +1,8 @@
 <template>
-  <button type="submit" class="button">
+  <button
+    type="submit"
+    class="button"
+  >
     <slot />
   </button>
 </template>

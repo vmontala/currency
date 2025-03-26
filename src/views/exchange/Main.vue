@@ -6,16 +6,22 @@
       </h1>
       <Form />
     </header>
-    <Conversion />
+    <Conversion :conversion="conversionStore.latest" v-if="conversionStore.latest" />
   </section>
-  <History />
+  <History v-if="conversionStore.history.length" />
 </template>
 
 <script setup lang="ts">
 import Conversion from '@/components/Conversion.vue'
-
 import Form from './Form.vue'
 import History from './History.vue'
+
+import useCurrenciesStore from '@/stores/currencies'
+import useConversionStore from '@/stores/conversion'
+
+await useCurrenciesStore().fetchCurrencies()
+
+const conversionStore = useConversionStore()
 </script>
 
 <style scoped>
