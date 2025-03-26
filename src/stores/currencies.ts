@@ -8,6 +8,7 @@ interface UnformattedCurrencies {
   [key: string]: string,
 }
 
+// Converts the map of currencies to a list as those are easier to navigate in the frontend
 const formatCurrencies = (currencies: UnformattedCurrencies) => Object.entries(currencies).map(
   ([code, name]) => ({
     code,
@@ -19,6 +20,7 @@ export default defineStore('currencies', () => {
   const currencies = ref(session.get('currencies') || []);
 
   const fetchCurrencies = async () => {
+    // Prevents re-fetching the currencies on window relaod, could be abstracted to the request util
     if (currencies.value.length) {
       return Promise.resolve()
     }

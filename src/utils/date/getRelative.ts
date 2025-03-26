@@ -1,3 +1,6 @@
+// Decided to use somewhat magic numbers here (i.e. 30 for month), this could be easily improved
+// with some proper data maps and more cases
+
 const formatter = new Intl.RelativeTimeFormat('en-NL', { numeric: 'auto' })
 
 const getUnit = (days: number) => {
@@ -21,6 +24,7 @@ const getUnit = (days: number) => {
   }
 }
 
+// Gets the relative interpretation from a date (i.e. `-1 day` becomes `yesterday`)
 const getRelative = (date: string) => {
   const now = +new Date()
   const then = +new Date(date)

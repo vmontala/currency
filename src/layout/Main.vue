@@ -1,5 +1,9 @@
 <template>
   <main class="main">
+    <!--
+      Normally there would be a loading state here, but it would only trigger once as the data
+      dependencies are cached
+    -->
     <Suspense>
       <slot />
     </Suspense>

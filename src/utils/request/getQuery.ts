@@ -1,13 +1,6 @@
 import type QueryParams from '@/types/QueryParams'
 
-/**
- * Serializes an object to a query string
- *
- * @param {object} params - Set of params to serialize on the URL
- *
- * @returns {string} - Either empty string or URL-friendly key-value serialized object starting with
- * `&`
- */
+// Serializes an object to a query string (starting with `&`)
 export default (params: QueryParams) => {
   if (!params || !Object.keys(params).length) {
     return '';
