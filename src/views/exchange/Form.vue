@@ -1,14 +1,14 @@
 <template>
   <form class="comparison" @submit.prevent="submit()">
     <Field>
-      <AmountInput v-model="amount" />
-      <CurrencySelector v-model="from" />
+      <AmountInput v-model="amount" :disabled="isLoading" />
+      <CurrencySelector v-model="from" :disabled="isLoading" />
     </Field>
     to
     <Field>
-      <CurrencySelector v-model="to" />
+      <CurrencySelector v-model="to" :disabled="isLoading" />
     </Field>
-    <Button>
+    <Button :disabled="isLoading">
       <Icon name="arrow-right" />
     </Button>
   </form>
@@ -31,14 +31,22 @@ const amount = ref()
 const from = ref('EUR')
 const to = ref('USD')
 
+const isLoading = ref(false)
+
 const submit = async () => {
   if (!amount.value) {
     return
   }
 
-  await conversionStore.convert(from.value, to.value, amount.value)
+  isLoading.value = true;
 
-  amount.value = undefined
+  try {
+    await conversionStore.convert(from.value, to.value, amount.value)
+
+    amount.value = undefined
+  } finally {
+    isLoading.value = false;
+  }
 }
 </script>
 

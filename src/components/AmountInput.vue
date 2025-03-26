@@ -7,12 +7,15 @@
       step="0.01"
       placeholder="0"
       class="amount__field"
+      v-bind="$attrs"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 const model = defineModel({ required: true })
+
+defineOptions({ inheritAttrs: false })
 </script>
 
 <style scoped>
@@ -36,6 +39,11 @@ const model = defineModel({ required: true })
 
     &[type=number] {
       -moz-appearance: textfield;
+    }
+
+    &[disabled] {
+      background-color: var(--color-generic-background);
+      color: var(--color-generic-gray);
     }
 
     &:focus-visible {
