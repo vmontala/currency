@@ -6,7 +6,7 @@ import type Conversion from '@/types/Conversion'
 import session from '@/utils/storage/session'
 import request from '@/utils/request'
 
-const formatter = Intl.NumberFormat('en-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format
+const formatter = Intl.NumberFormat('en-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
 interface UnformattedConversion {
   date: string,
@@ -20,6 +20,7 @@ const formatConversion = ({ date, rate, from, amount, to }: UnformattedConversio
   const convertedAmount = amount * rate
 
   return {
+    // Ultimately the only way to get a unique key for rendering the history
     id: +(new Date()),
     date: date,
     rate: rate,
@@ -27,14 +28,14 @@ const formatConversion = ({ date, rate, from, amount, to }: UnformattedConversio
       currency: from,
       amount: {
         value: amount,
-        label: formatter(amount),
+        label: formatter.format(amount),
       },
     },
     to: {
       currency: to,
       amount: {
         value: convertedAmount,
-        label: formatter(convertedAmount),
+        label: formatter.format(convertedAmount),
       },
     },
   }
@@ -45,24 +46,21 @@ export default defineStore('conversion', () => {
   const latest = computed(() => conversions.value.at(0))
   const history = computed(() => conversions.value.slice(1))
 
-  const fetchConversion = async (from: string, to: string, amount: number) => {
+  // Fetches new conversion rates given the provided currencies
+  const fetchRate = async (from: string, to: string) => {
     try {
       const response = await request('latest', { base: from, symbols: [to] })
 
-      return formatConversion({
-        from,
-        to,
-        amount,
-        date: response.date,
-        rate: response.rates[to],
-      });
+      return response.rates[to]
     } catch (error) {
-      window.alert('Error converting the currencies')
+      window.alert('Error fetching the rates for those currencies')
 
       console.error(error)
     }
   }
 
+  // Finds out wheter to use an existing conversion rate for the given parameters or fetch new rates
+  // and then converts the currencies
   const getConversion = async (from: string, to: string, amount: number) => {
     const date = (new Date()).toISOString().split('T')[0]
 
@@ -70,19 +68,16 @@ export default defineStore('conversion', () => {
       conversion.date === date && conversion.from.currency === from && conversion.to.currency === to
     ))
 
-    if (!existingConversion) {
-      return await fetchConversion(from, to, amount)
-    }
-
     return formatConversion({
       from,
       to,
       amount,
       date,
-      rate: existingConversion.rate,
+      rate: existingConversion.rate || await fetchRate(from, to),
     })
   }
 
+  // Converts the amount from the selected to the selected currency
   const convert = async (from: string, to: string, amount: number) => {
     const conversion = await getConversion(from, to, amount)
 
@@ -92,7 +87,8 @@ export default defineStore('conversion', () => {
 
     conversions.value = [conversion, ...conversions.value]
 
-    //
+    // Caches the conversion list so more requests can be saved, and history remains consistent
+    // between application uses
     session.set('conversions', conversions.value)
   }
 

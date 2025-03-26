@@ -13,11 +13,14 @@
 
 <script setup lang="ts">
 import Conversion from '@/components/Conversion.vue'
-import Form from './Form.vue'
-import History from './History.vue'
 
 import useCurrenciesStore from '@/stores/currencies'
 import useConversionStore from '@/stores/conversion'
+
+// I decided to split the view into smaller chunks, even if they consume the same stores, as I think
+// it makes more sense for both matching the layout but also splitting concerns
+import Form from './Form.vue'
+import History from './History.vue'
 
 await useCurrenciesStore().fetchCurrencies()
 

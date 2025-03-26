@@ -1,3 +1,5 @@
+// Very simple fetch abstraction, including response pre-formatting
+
 import fetchJsonp from 'fetch-jsonp'
 
 import type QueryParams from '@/types/QueryParams'
