@@ -1,6 +1,6 @@
 <template>
   <form class="comparison" @submit.prevent="submit()">
-    <Field>
+    <Field class="comparison__from">
       <AmountInput v-model="amount" :disabled="isLoading" />
       <CurrencySelector v-model="from" :disabled="isLoading" />
     </Field>
@@ -55,7 +55,19 @@ const submit = async () => {
   align-items: center;
   display: grid;
   gap: var(--s-md);
-  grid-template-columns: auto repeat(3, min-content);
+  grid-template-columns: repeat(2, min-content) auto;
   width: 100%;
+
+  .comparison__from {
+    grid-column: 1/4;
+  }
+
+  @media screen and (min-width: 700px) {
+    grid-template-columns: auto repeat(3, min-content);
+
+    .comparison__from {
+      grid-column: initial;
+    }
+  }
 }
 </style>
