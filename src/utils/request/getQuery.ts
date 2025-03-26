@@ -1,7 +1,7 @@
 import type QueryParams from '@/types/QueryParams'
 
 // Serializes an object to a query string (starting with `&`)
-export default (params: QueryParams) => {
+export default (params: QueryParams = {}) => {
   if (!params || !Object.keys(params).length) {
     return '';
   }
