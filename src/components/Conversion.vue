@@ -1,20 +1,36 @@
 <template>
-  <div class="history-item">
-    <div class="history-item__time">
-      Yesterday
+  <div class="conversion">
+    <div class="conversion__time" :title="conversion.date">
+      {{ time }}
     </div>
     <Pill type="secondary">
-      40 USD
+      {{ conversion.from.amount.label }}
+      {{ conversion.from.currency }}
     </Pill>
-    were
+    {{ time === 'today' ? 'are' : 'were' }}
     <Pill>
-      50 EUR
+      {{ conversion.to.amount.label }}
+      {{ conversion.to.currency }}
     </Pill>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
+import type Conversion from '@/types/Conversion'
+
 import Pill from '@/components/Pill.vue'
+
+import getRelative from '@/utils/date/getRelative'
+
+interface Props {
+  conversion: Conversion
+}
+
+const props = defineProps<Props>()
+
+const time = computed(() => getRelative(props.conversion.date))
 </script>
 
 <style scoped>
@@ -23,8 +39,9 @@ import Pill from '@/components/Pill.vue'
   display: flex;
   gap: var(--s-xs);
 
-  .history-item__time {
+  .conversion__time {
     color: var(--color-generic-gray);
+    text-transform: capitalize;
   }
 }
 </style>

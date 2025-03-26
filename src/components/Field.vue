@@ -6,7 +6,6 @@
 
 <style scoped>
 .field {
-  background-color: var(--color-generic-white);
   border: 0.4rem solid var(--color-generic-gray);
   border-radius: var(--border-radius-lg);
   display: grid;

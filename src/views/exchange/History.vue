@@ -4,17 +4,21 @@
       Exchange history
     </h2>
     <div class="history__items">
-      <Conversion />
-      <Conversion />
-      <Conversion />
-      <Conversion />
-      <Conversion />
+      <Conversion
+        :conversion="conversion"
+        v-for="conversion in conversionStore.history"
+        :key="conversion.id"
+      />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import Conversion from '@/components/Conversion.vue'
+
+import useConversionStore from '@/stores/conversion'
+
+const conversionStore = useConversionStore()
 </script>
 
 <style scoped>

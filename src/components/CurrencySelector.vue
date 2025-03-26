@@ -1,30 +1,30 @@
 <template>
   <div class="currencies">
-    {{ value?.code }}
-    <select v-model="value" class="currencies__field">
+    <select v-model="model" class="currencies__field">
       <option
-        v-for="option in options"
-        :key="option.code"
-        :value="option"
+        v-for="currency in currenciesStore.currencies"
+        :key="currency.code"
+        :value="currency.code"
       >
-        {{ option.name }} ({{ option.code }})
+        {{ currency.name }} ({{ currency.code }})
       </option>
     </select>
+    <div class="currencies__value">
+      {{ model }}
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import useCurrenciesStore from '@/stores/currencies'
 
-import currencies from './currencies.json'
+const currenciesStore = useCurrenciesStore()
 
-const options = computed(() => Object.entries(currencies).map(([code, name]) => ({ code, name })))
-const value = ref(options.value.find(({ code }) => code === 'EUR'));
+const model = defineModel({ required: true })
 </script>
 
 <style scoped>
 .currencies {
-  padding: var(--s-sm);
   position: relative;
 
   .currencies__field {
@@ -36,6 +36,11 @@ const value = ref(options.value.find(({ code }) => code === 'EUR'));
   .currencies__value {
     background-color: var(--color-generic-white);
     padding: var(--s-sm);
+  }
+
+  .currencies__value {
+    padding: var(--s-sm);
+    background-color: var(--color-generic-white);
   }
 }
 </style>

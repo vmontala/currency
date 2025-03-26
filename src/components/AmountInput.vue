@@ -1,6 +1,7 @@
 <template>
   <div class="amount">
     <input
+      v-model.number="model"
       type="number"
       min="0"
       step="0.01"
@@ -9,6 +10,10 @@
     />
   </div>
 </template>
+
+<script setup lang="ts">
+const model = defineModel({ required: true })
+</script>
 
 <style scoped>
 .amount {
