@@ -14,10 +14,13 @@ defineOptions({ inheritAttrs: false })
 
 <style scoped>
 .button {
+  align-items: center;
   background-color: var(--color-primary);
   border: 0.4rem solid var(--color-generic-gray);
   border-radius: var(--border-radius-lg);
   color: var(--color-generic-white);
+  display: flex;
+  justify-content: center;
   padding: var(--s-sm);
 
   &:not([disabled]) {
