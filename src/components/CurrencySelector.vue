@@ -15,12 +15,15 @@
     </select>
     <div class="currencies__value">
       {{ model }}
+      <Icon name="caret-down" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import useCurrenciesStore from '@/stores/currencies'
+
+import Icon from '@/components/Icon.vue'
 
 const currenciesStore = useCurrenciesStore()
 
@@ -41,12 +44,10 @@ defineOptions({ inheritAttrs: false })
 
   .currencies__value {
     background-color: var(--color-generic-white);
-    padding: var(--s-sm);
-  }
-
-  .currencies__value {
-    padding: var(--s-sm);
-    background-color: var(--color-generic-white);
+    padding: var(--s-sm) 0 var(--s-sm) var(--s-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .currencies__field[disabled] + .currencies__value {
